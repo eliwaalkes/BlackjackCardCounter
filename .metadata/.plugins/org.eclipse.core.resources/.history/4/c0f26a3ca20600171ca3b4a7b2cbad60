@@ -1,0 +1,12 @@
+public interface Player {
+	public void newRound();
+	public void addCard(int card);
+	public int sumCards();
+	public String play(int deal);
+	public void printHand();
+	public String choice();
+	public void winHand();
+	public void loseHand();
+	public int chips();
+	public String playerIndex();
+}

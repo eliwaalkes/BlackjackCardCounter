@@ -1,0 +1,53 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Deck {
+	public ArrayList<String> deck = new ArrayList<>();
+	public ArrayList<String> discard = new ArrayList<>();
+	int index = 0;
+	int size;
+	
+	public Deck(int num){
+		size = 52*num;
+		for(int i = 0; i < num; i++){
+			for(int j = 0; j < 4; j++){
+				for(int k = 1; k < 14; k++){
+					if(k==1)
+						deck.add("A");
+					else if(k <= 10)
+						deck.add(Integer.toString(k));
+					else if(k == 11)
+						deck.add("J");
+					else if(k == 12)
+						deck.add("Q");
+					else if(k == 13)
+						deck.add("K");
+				}
+			}
+		}
+		Collections.shuffle(deck);
+	}
+	
+	public String deal(){
+		if (deck.isEmpty()){
+			Collections.shuffle(discard);
+			deck = discard;
+		}
+		String d = deck.remove(0);
+		discard.add(d);
+		return d;
+	}
+	
+	public void print(){
+		System.out.println("Deck: ");
+		for(String i : deck){
+			System.out.println(i);
+		}
+		
+		System.out.println("Discard: ");
+		for(String i : discard){
+			System.out.println(i);
+		}
+		System.out.print("\n");
+	}
+}

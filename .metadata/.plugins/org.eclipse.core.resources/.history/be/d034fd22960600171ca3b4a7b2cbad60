@@ -1,0 +1,77 @@
+import java.util.ArrayList;
+
+public class SimplePlayer implements Player{
+	ArrayList<Integer> cards = new ArrayList<>();
+	ArrayList<Integer> dd = new ArrayList<>();
+	int playerIndex;
+	int chips;
+	int bet = 10;
+	
+	public SimplePlayer(int chips, int playerIndex){
+		this.chips = chips;
+		this.playerIndex = playerIndex;
+	}
+	
+	public void printHand(){
+		System.out.print("Player " + Integer.toString(playerIndex) + ": " + Integer.toString(cards.get(0)) + ", " + Integer.toString(cards.get(1)));
+	}
+	
+	public void newRound(){
+		cards.clear();
+		dd.clear();
+	}
+	
+	public void addCard(int card){
+		cards.add(card);
+	}
+	
+	public void changeChips(int chips){
+		this.chips += chips;
+	}
+	
+	public int sumCards(){
+		int sum = 0;
+		for(Integer i : cards)
+			sum += i;
+		return sum;
+	}
+	
+	public String play(int deal){
+		int sum = sumCards();
+		
+		if (sum > 21)
+			return "Bust";
+		
+		if(sum >= 17)
+			return "Stay";
+		
+		if(sum <= 16 && sum >= 13){
+			if(deal < 7)
+				return "Hit";
+			return "Stay";
+		}
+		
+		if(sum == 12){
+			if(deal >= 4 && deal <= 6)
+				return "Stay";
+			return "Hit";
+		}
+		
+		if(sum == 11 || sum == 10){
+			if(deal == 10 && sum == 10)
+				return "Hit";
+			if(cards.get(0) == cards.get(1)){
+				dd.add(cards.get(1));
+				return "Double Down";
+			}
+			return "Hit";
+		}
+		
+		if(sum == 9 && (deal >= 3 && deal <= 6))
+			return "Double Down";
+		
+		return "Hit";
+	}
+	
+	
+}

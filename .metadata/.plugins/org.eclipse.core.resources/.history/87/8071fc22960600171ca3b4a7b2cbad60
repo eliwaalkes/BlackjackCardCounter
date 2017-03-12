@@ -1,0 +1,44 @@
+public class Game {
+	public int numPlayers;
+	public Player[] players;
+	public Player dealer;
+	public Deck deck;
+	public int dealerUp;
+	
+	public Game(int numPlayers){
+		this.numPlayers = numPlayers;
+		this.players = new Player[numPlayers];
+		for (int i = 0; i < numPlayers; i++){
+			Player p = new SimplePlayer(100, i+1);
+			players[i] = p;
+		}
+		this.dealer = new Dealer();
+		this.deck = new Deck(4);
+	}
+	
+	public void deal(){
+		for(Player p : players){
+			p.newRound();
+			p.addCard(deck.deal());
+		}
+		dealer.addCard(deck.deal());
+		
+		for(Player p : players)
+			p.addCard(deck.deal());
+		dealerUp = deck.deal();
+		dealer.addCard(dealerUp);
+	}
+	
+	public void playRound(){
+		deal();
+		System.out.println("Dealer Up: " + Integer.toString(dealerUp));
+		for(Player p : players){
+			p.printHand();
+			System.out.print(" " + p.play(dealerUp));
+			System.out.print("\n");
+		}
+			
+		dealer.printHand();
+	}
+
+}

@@ -1,0 +1,9 @@
+public interface Player {
+	public void newRound();
+	public void addCard(int card);
+	public void changeChips(int chips);
+	public int sumCards();
+	public String play(int deal);
+	public void printHand();
+	public String choice();
+}

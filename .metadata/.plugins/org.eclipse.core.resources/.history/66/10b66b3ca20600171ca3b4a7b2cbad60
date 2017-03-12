@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+
+public class SimplePlayer implements Player{
+	ArrayList<Integer> cards = new ArrayList<>();
+	ArrayList<Integer> dd = new ArrayList<>();
+	int playerIndex;
+	int chips;
+	int bet;
+	public String choice;
+	
+	public SimplePlayer(int chips, int playerIndex, int bet){
+		this.chips = chips;
+		this.playerIndex = playerIndex;
+		this.bet = bet;
+	}
+	
+	public String choice(){
+		return choice;
+	}
+	
+	public void printHand(){
+		System.out.print("Player " + Integer.toString(playerIndex) + ": ");
+		for(Integer i : cards)
+			System.out.print(Integer.toString(i) + ", ");
+		System.out.print("Total: " + Integer.toString(sumCards()));
+	}
+	
+	public void newRound(){
+		cards.clear();
+		dd.clear();
+	}
+	
+	public void addCard(int card){
+		cards.add(card);
+	}
+
+	public int sumCards(){
+		int sum = 0;
+		for(Integer i : cards)
+			sum += i;
+		return sum;
+	}
+	
+	public String play(int deal){
+		int sum = sumCards();
+		
+		if (sum > 21)
+			choice = "Bust";
+		
+		else if(sum >= 17)
+			choice = "Stay";
+		
+		else if(sum <= 16 && sum >= 13){
+			if(deal < 7)
+				choice = "Hit";
+			choice = "Stay";
+		}
+		
+		else if(sum == 12){
+			if(deal >= 4 && deal <= 6)
+				choice = "Stay";
+			choice = "Hit";
+		}
+		
+		else if(sum == 11 || sum == 10 && cards.size() == 2){
+			if(deal == 10 && sum == 10)
+				choice = "Hit";
+			if(cards.get(0) == cards.get(1)){
+				dd.add(cards.get(1));
+				choice = "Hit";
+				//return "Double Down";
+			}
+			choice = "Hit";
+		}
+		
+		else if(sum == 9 && (deal >= 3 && deal <= 6)){
+			choice = "Hit";
+			//return "Double Down";
+		}
+		else
+			choice = "Hit";
+		return choice;
+	}
+
+	public void winHand() {
+		chips -= bet;
+	}
+
+	public void loseHand() {
+		chips += bet;
+	}
+	
+	public String playerIndex(){
+		return Integer.toString(playerIndex);
+	}
+	
+	public int chips(){
+		return chips;
+	}
+	
+	
+}

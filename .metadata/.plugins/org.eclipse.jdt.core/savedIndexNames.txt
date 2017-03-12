@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/Users/eliwaalkes/Blackjack/.metadata/.plugins/org.eclipse.jdt.core
+323283113.index

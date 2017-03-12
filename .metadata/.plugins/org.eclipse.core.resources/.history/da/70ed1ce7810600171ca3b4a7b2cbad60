@@ -1,0 +1,13 @@
+package blackjack;
+
+import java.util.ArrayList;
+
+public class Table {
+	Deck deck;
+	
+	public void main(String args[]){
+		deck = new Deck(1);
+		deck.print();
+	}
+	
+}

@@ -1,0 +1,12 @@
+import java.util.ArrayList;
+
+public class SimplePlayer {
+	ArrayList<Integer> cards;
+	ArrayList<Integer> split;
+	int chips;
+	int bet;
+	
+	public void bet(int deal){
+		
+	}
+}

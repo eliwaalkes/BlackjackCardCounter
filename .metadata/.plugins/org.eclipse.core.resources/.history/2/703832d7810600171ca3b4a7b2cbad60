@@ -1,0 +1,14 @@
+package blackjack;
+
+public class Table {
+	Deck deck;
+	
+	
+	
+	
+	public void main(String args[]){
+		deck = new Deck(1);
+		System.out.print(deck);
+	}
+	
+}

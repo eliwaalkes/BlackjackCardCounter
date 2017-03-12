@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+
+public class Dealer implements Player{
+	ArrayList<Integer> cards = new ArrayList<>();
+	
+	public void printHand(){
+		System.out.print("Dealer: ");
+		for(Integer i : cards)
+			System.out.print(Integer.toString(i) + ", ");
+		}
+	
+	public void newRound(){
+		cards.clear();
+	}
+	
+	public void addCard(int card){
+		cards.add(card);
+	}
+	
+	public int sumCards(){
+		int sum = 0;
+		for(Integer i : cards)
+			sum += i;
+		return sum;
+	}
+	
+	public String play(int deal){
+		int sum = sumCards();
+		if(sum >= 21)
+			return "Bust";
+		if(sum >= 17)
+			return "Stay";
+		return "Hit";
+	}
+
+	public void changeChips(int chips) {
+	}
+	
+}

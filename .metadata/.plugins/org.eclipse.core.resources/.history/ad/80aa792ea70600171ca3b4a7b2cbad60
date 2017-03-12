@@ -1,0 +1,9 @@
+public class Table {
+	
+	public static void main(String[] args) {
+		Game g = new Game(5);
+		for(int i = 0; i < 3; i++)
+			g.playPrintedRound();
+		g.printTotals();
+	}
+}

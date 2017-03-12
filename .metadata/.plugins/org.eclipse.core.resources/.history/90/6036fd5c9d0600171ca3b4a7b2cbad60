@@ -1,0 +1,8 @@
+public class Table {
+	
+	public static void main(String[] args) {
+		Game g = new Game(5);
+		g.playRound();
+		
+	}
+}

@@ -1,0 +1,32 @@
+package blackjack;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Deck {
+	public int[] deck;
+	public int[] discard;
+	int index = 0;
+	
+	public Deck(int num){
+		deck    = new int[52*num];
+		discard = new int[52*num];
+		
+		for(int i = 0; i < num; i++){
+			for(int j = 0; j < 4; j++){
+				for(int k = 0; k < 13; j++){
+					deck[i*52 + j*13 + k] = k+1;
+				}
+			}
+		}
+		Collections.shuffle(Arrays.asList(deck));
+	}
+	
+	public int[] deal(){
+		int[] d = new int[2];
+		d[0] = deck[index];
+		d[1] = deck[index+1];
+		index += 2;
+		return d;
+	}
+}

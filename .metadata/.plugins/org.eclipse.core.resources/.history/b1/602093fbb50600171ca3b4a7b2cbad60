@@ -1,0 +1,70 @@
+
+public class KOCounterPlayer implements Player {
+
+	@Override
+	public void newRound() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addCard(String card) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int sumCards() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String play(int deal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void printHand() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String choice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void winHand() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void loseHand() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int chips() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String playerIndex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int dealerUp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

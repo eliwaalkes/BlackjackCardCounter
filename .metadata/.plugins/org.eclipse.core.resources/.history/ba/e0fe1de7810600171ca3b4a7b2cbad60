@@ -1,0 +1,45 @@
+package blackjack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Deck {
+	public ArrayList<Integer> deck = new ArrayList<Integer>();
+	public ArrayList<Integer> discard = new ArrayList<Integer>();
+	int index = 0;
+	int size;
+	
+	public Deck(int num){
+		size = 52*num;
+		for(int i = 0; i < num; i++){
+			for(int j = 0; j < 4; j++){
+				for(int k = 0; k < 13; j++){
+					deck.add(k);
+				}
+			}
+		}
+		Collections.shuffle(deck);
+	}
+	
+	public int[] deal(){
+		int[] d = new int[2];
+		d[0] = deck.remove(0);
+		d[1] = deck.remove(1);
+		index += 2;
+		return d;
+	}
+	
+	public void print(){
+		System.out.print("Deck: ");
+		for(int i = 0; i < size-1; i++){
+			System.out.print(Integer.toString(deck.get(i)) + ", " );
+		}
+		System.out.print(Integer.toString(deck.get(size-1)) + "\n");
+		
+		System.out.print("Discard: ");
+		for(Integer i : discard){
+			System.out.print(Integer.toString(deck.get(i)) + ", " );
+		}
+	}
+}

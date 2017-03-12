@@ -1,0 +1,15 @@
+
+public class Table {
+	
+	public static void main(String[] args) {
+		Deck deck = new Deck(1);
+		deck.print();
+		int[] hand = deck.deal();
+		int[] hand2 = deck.deal();
+		System.out.println(hand[0]);
+		System.out.println(hand[1]);
+		System.out.println(hand2[0]);
+		System.out.println(hand2[1]);
+	}
+
+}

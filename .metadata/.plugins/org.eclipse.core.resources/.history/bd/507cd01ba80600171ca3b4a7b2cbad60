@@ -1,0 +1,122 @@
+public class Game {
+	public int numPlayers;
+	public Player[] players;
+	public Player dealer;
+	public Deck deck;
+	public int dealerUp;
+	
+	public Game(int numPlayers){
+		this.numPlayers = numPlayers;
+		this.players = new Player[numPlayers];
+		for (int i = 0; i < numPlayers; i++){
+			Player p = new SimplePlayer(1000, i+1, 100);
+			players[i] = p;
+		}
+		this.dealer = new Dealer();
+		this.deck = new Deck(4);
+	}
+	
+	public void deal(){
+		dealer.newRound();
+		for(Player p : players){
+			p.newRound();
+			p.addCard(deck.deal());
+		}
+		dealer.addCard(deck.deal());
+		
+		for(Player p : players)
+			p.addCard(deck.deal());
+		String dealerSecond = deck.deal();
+		dealer.addCard(dealerSecond);
+		dealerUp = dealer.dealerUp();
+	}
+	
+	public void printTotals(){
+		System.out.print("\n");
+		for(Player p : players){
+			System.out.println("Player " + p.playerIndex() + " Total Chips: " + Integer.toString(p.chips()));
+		}
+		System.out.print("\n");
+	}
+	
+	public void calculateRound(Player p, Player d){
+		if(p.choice().equals("Bust"))
+			p.loseHand();
+		else if(p.choice().equals("Stay")){
+			if(d.choice().equals("Bust"))
+				p.winHand();
+			if (p.sumCards() < d.sumCards())
+				p.loseHand();
+			if (p.sumCards() > d.sumCards())
+				p.winHand();
+		}
+	}
+	
+	public void printRound(Player p, Player d){
+		p.printHand();
+		if(p.choice().equals("Bust")){
+			p.loseHand();
+			System.out.print(" You Lose! Busted.");
+		}
+		else if(p.choice().equals("Stay")){
+			if(d.choice().equals("Bust")){
+				System.out.print(" You Win! Dealer Busted.");
+				p.winHand();
+			}
+			else if (p.sumCards() < d.sumCards()){
+				System.out.print(" You Lose! Dealer's cards are greater" );
+				p.loseHand();
+			}
+			else if (p.sumCards() > d.sumCards()){
+				System.out.print(" You win! Your cards are greater!");
+				p.winHand();
+			}
+			else
+				System.out.print(" Push.");
+		}
+		System.out.print("\n");
+	}
+	
+	public void playPrintedRound(){
+		deal();
+		System.out.println("Dealer Up: " + Integer.toString(dealerUp));
+		for(Player p : players){
+			String choice = p.play(dealerUp);
+			while(choice.equals("Hit")){
+				p.addCard(deck.deal());
+				choice = p.play(dealerUp);
+			}
+		}
+		String dc = dealer.play(0);
+		while(dc.equals("Hit")){
+			dealer.addCard(deck.deal());
+			dc = dealer.play(dealerUp);
+		}
+		for (Player p : players){
+			printRound(p, dealer);
+		}
+		dealer.printHand();
+
+		System.out.print("\n");
+	}
+	
+	public void playRound(){
+		deal();
+		for(Player p : players){
+			String choice = p.play(dealerUp);
+			while(choice.equals("Hit")){
+				p.addCard(deck.deal());
+				choice = p.play(dealerUp);
+			}
+		}
+		String dc = dealer.play(0);
+		while(dc.equals("Hit")){
+			dealer.addCard(deck.deal());
+			dc = dealer.play(dealerUp);
+		}
+		for (Player p : players){
+			calculateRound(p, dealer);
+		}
+	}
+
+}

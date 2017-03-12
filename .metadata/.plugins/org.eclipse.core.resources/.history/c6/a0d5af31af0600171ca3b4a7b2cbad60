@@ -1,0 +1,58 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Deck {
+	public ArrayList<String> deck = new ArrayList<>();
+	public ArrayList<String> deck2 = new ArrayList<>();
+	int cur;
+	int size;
+	
+	public Deck(int num){
+		size = 52*num;
+		for(int i = 0; i < num; i++){
+			for(int j = 0; j < 4; j++){
+				for(int k = 1; k < 14; k++){
+					if(k==1){
+						deck.add("A");
+						deck2.add("A");
+					}
+					else if(k <= 10){
+						deck.add(Integer.toString(k));
+						deck2.add(Integer.toString(k));
+					}
+					else if(k == 11){
+						deck.add("J");
+						deck2.add("J");
+					}
+					else if(k == 12){
+						deck.add("Q");
+						deck2.add("Q");
+					}
+					else if(k == 13){
+						deck.add("K");
+						deck2.add("K");
+					}
+				}
+			}
+		}
+		Collections.shuffle(deck);
+	}
+	
+	public String deal(){
+		if (size*2/3 < cur){
+			deck = deck2;
+			Collections.shuffle(deck);
+		}
+		String d = deck.remove(0);
+		cur++;
+		return d;
+	}
+	
+	public void print(){
+		System.out.println("Deck: ");
+		for(String i : deck){
+			System.out.println(i);
+		}
+		System.out.print("\n");
+	}
+}
