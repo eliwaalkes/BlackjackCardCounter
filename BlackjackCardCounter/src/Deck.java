@@ -13,26 +13,35 @@ public class Deck {
 		size = 52*num;
 		for(int i = 0; i < num; i++){
 			for(int j = 0; j < 4; j++){
+				String suit = "";
+				if(j== 0)
+					suit = "D";
+				if(j== 1)
+					suit = "H";
+				if(j== 2)
+					suit = "S";
+				if(j== 3)
+					suit = "C";
 				for(int k = 1; k < 14; k++){
 					if(k==1){
-						deck.add("A");
-						deck2.add("A");
+						deck.add("A" + suit);
+						deck2.add("A" + suit);
 					}
 					else if(k <= 10){
-						deck.add(Integer.toString(k));
-						deck2.add(Integer.toString(k));
+						deck.add(Integer.toString(k) + suit);
+						deck2.add(Integer.toString(k) + suit);
 					}
 					else if(k == 11){
-						deck.add("J");
-						deck2.add("J");
+						deck.add("J" + suit);
+						deck2.add("J" + suit);
 					}
 					else if(k == 12){
-						deck.add("Q");
-						deck2.add("Q");
+						deck.add("Q" + suit);
+						deck2.add("Q" + suit);
 					}
 					else if(k == 13){
-						deck.add("K");
-						deck2.add("K");
+						deck.add("K" + suit);
+						deck2.add("K" + suit);
 					}
 				}
 			}
@@ -48,7 +57,6 @@ public class Deck {
 			Collections.shuffle(deck);
 			cur = 0;
 			d += "X";
-			System.out.println("\n\n\n\n\n-------------------------\n\n\n\n\n" );
 		}
 		d += deck.remove(0);
 		cur++;

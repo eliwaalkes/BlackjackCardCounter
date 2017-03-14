@@ -9,8 +9,8 @@ public class Game {
 	public ArrayList<String> countList = new ArrayList<>();
 	int chips;
 	
-	public Game(int simplePlayers, int KOCounters, int chips, int minBet){
-		this.numPlayers = simplePlayers + KOCounters;
+	public Game(int simplePlayers, int KOCounters, int WongHalvesCounter, int HumanPlayers, int chips, int minBet){
+		this.numPlayers = simplePlayers + KOCounters + WongHalvesCounter + HumanPlayers;
 		this.players = new Player[numPlayers];
 		for (int i = 0; i < simplePlayers; i++){
 			Player p = new SimplePlayer(chips, i+1, minBet);
@@ -18,6 +18,14 @@ public class Game {
 		}
 		for (int i = simplePlayers; i < numPlayers; i++){
 			Player p = new KOCounterPlayer(chips, i+1, minBet);
+			players[i] = p;
+		}
+		for (int i = simplePlayers + KOCounters; i < numPlayers; i++){
+			Player p = new WongHalvesCounter(chips, i+1, minBet);
+			players[i] = p;
+		}
+		for (int i = simplePlayers + KOCounters + WongHalvesCounter; i < numPlayers; i++){
+			Player p = new HumanPlayer(chips, i+1, minBet);
 			players[i] = p;
 		}
 		this.dealer = new Dealer();
@@ -110,6 +118,7 @@ public class Game {
 			else
 				System.out.print(" Push.");
 		}
+		System.out.println("\nRemaining Chips: " + Integer.toString(p.chips()));
 		System.out.print("\n");
 	}
 	
@@ -169,6 +178,10 @@ public class Game {
 		for (Player p : players){
 			p.updateRunningCount(countList);
 			calculateRound(p, dealer);
+			if (p instanceof HumanPlayer){
+				dealer.printHand();
+				printRound(p, dealer);
+			}
 		}
 	}
 

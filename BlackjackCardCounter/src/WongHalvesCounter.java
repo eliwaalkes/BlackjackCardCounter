@@ -1,19 +1,23 @@
 import java.util.ArrayList;
 
-public class SimplePlayer implements Player{
+public class WongHalvesCounter implements Player{
 	public ArrayList<String> cards = new ArrayList<>();
-	public ArrayList<String> split = new ArrayList<>();
+	public ArrayList<String> runningCountList = new ArrayList<>();
 	public int playerIndex;
 	public int chips;
+	public int minBet;
 	public int bet;
 	public String choice;
 	public boolean dd = false;
+	public int runningCount = 0;
+	int size = 0;
 	
 	
-	public SimplePlayer(int chips, int playerIndex, int bet){
+	public WongHalvesCounter(int chips, int playerIndex, int minBet){
 		this.chips = chips;
 		this.playerIndex = playerIndex;
-		this.bet = bet;
+		this.minBet = minBet;
+		this.bet = minBet;
 	}
 	
 	public String choice(){
@@ -141,12 +145,29 @@ public class SimplePlayer implements Player{
 		return 0;
 	}
 
+	@Override
 	public void bet() {
+		if (runningCount < -3)
+			bet = minBet;
+		else if (runningCount == -2 || runningCount == -3)
+			bet = 2*minBet;
+		else if (runningCount > -2 && runningCount < 2)
+			bet = 5*minBet;
+		else {
+			int mult = 5;
+			for (int i = 2; i < runningCount; i+=2)
+				mult *= 2;
+			bet = mult*minBet;
+			if(bet>chips())
+				bet = chips()/2;
+		}
 	}
 
 	public void newShuffle() {
+		runningCount = 0;
+		bet = minBet;
 	}
-
+	
 	public void printPlayer(int chips) {
 		int net = chips;
 		if (chips() > net)
@@ -155,17 +176,34 @@ public class SimplePlayer implements Player{
 			net = chips() - net;
 		else
 			net = net + chips();
-		System.out.println("Simple Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
-	}
-	
-	public void printBet() {
-		System.out.println("Simple Player " + playerIndex() + " Bet = " + Integer.toString(bet));
+		System.out.println("Wong Halves Counter Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 
 	@Override
+	public void printBet() {
+		System.out.println("Wong Halves Counter Player " + playerIndex() + " Bet = " + Integer.toString(bet));
+		System.out.println("Wong Count = " + Integer.toString(runningCount));
+	}
+
+
+	@Override
 	public void updateRunningCount(ArrayList<String> countList) {
-		// TODO Auto-generated method stub
-		
+		for(String c : countList){
+			String i = c.substring(0,c.length()-1);
+			runningCountList.add(i);
+			size++;
+			Integer x = translate(i);
+			if(x==9)
+				runningCount--;
+			if(x==2 || x==7)
+				runningCount++;
+			if(x==5)
+				runningCount +=3;
+			if (x >= 3 && x <= 4 || x == 6)
+				runningCount+= 2;
+			if(x >= 10)
+				runningCount-=2;
+		}
 	}
 	
 	

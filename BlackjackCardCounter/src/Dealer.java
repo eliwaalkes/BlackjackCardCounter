@@ -14,7 +14,8 @@ public class Dealer implements Player{
 	}
 	
 	public int dealerUp(){
-		return translate(cards.get(1));
+		String c = cards.get(1);
+		return translate(c.substring(0, c.length()-1));
 	}
 	
 	public String choice(){
@@ -32,7 +33,8 @@ public class Dealer implements Player{
 	public int sumCards(){
 		int sum = 0;
 		boolean ace = false;
-		for(String i : cards){
+		for(String c : cards){
+			String i = c.substring(0,c.length()-1);
 			if (i.equals("A"))
 				ace = true;
 			Integer x = translate(i);

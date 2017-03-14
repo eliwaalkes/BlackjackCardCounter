@@ -42,7 +42,8 @@ public class KOCounterPlayer implements Player {
 	public int sumCards(){
 		int sum = 0;
 		int aceCount = 0;
-		for(String i : cards){
+		for(String c : cards){
+			String i = c.substring(0,c.length()-1);
 			if (i.equals("A"))
 				aceCount++;
 			Integer x = translate(i);
@@ -111,8 +112,10 @@ public class KOCounterPlayer implements Player {
 		if (dd)
 			chips += 2*bet;
 		else {
-			String one = cards.get(0);
-			String two = cards.get(1);
+			String c1 = cards.get(0);
+			String c2 = cards.get(1);
+			String one = c1.substring(0, c1.length()-1);
+			String two = c2.substring(0, c2.length()-1);
 			if (one.equals("A") && (two.equals("J")||two.equals("Q")||two.equals("K")))
 				chips += bet + (bet/2);
 			else if  (two.equals("A") && (one.equals("J")||one.equals("Q")||one.equals("K")))
@@ -154,7 +157,10 @@ public class KOCounterPlayer implements Player {
 			for (int i = 2; i < runningCount; i+=2)
 				mult *= 2;
 			bet = mult*minBet;
+			if(bet>chips())
+				bet = chips()/2;
 		}
+		
 	}
 
 	public void newShuffle() {
@@ -176,13 +182,14 @@ public class KOCounterPlayer implements Player {
 	@Override
 	public void printBet() {
 		System.out.println("KO Counter Player " + playerIndex() + " Bet = " + Integer.toString(bet));
-		System.out.println("Running Count Num = " + Integer.toString(runningCount));
+		System.out.println("KO Count = " + Integer.toString(runningCount));
 	}
 
 
 	@Override
 	public void updateRunningCount(ArrayList<String> countList) {
-		for(String i : countList){
+		for(String c : countList){
+			String i = c.substring(0,c.length()-1);
 			runningCountList.add(i);
 			Integer x = translate(i);
 			if (x >= 2 && x <= 7)

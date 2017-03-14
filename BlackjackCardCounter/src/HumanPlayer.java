@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class SimplePlayer implements Player{
+public class HumanPlayer implements Player{
 	public ArrayList<String> cards = new ArrayList<>();
 	public ArrayList<String> split = new ArrayList<>();
 	public int playerIndex;
@@ -10,7 +11,7 @@ public class SimplePlayer implements Player{
 	public boolean dd = false;
 	
 	
-	public SimplePlayer(int chips, int playerIndex, int bet){
+	public HumanPlayer(int chips, int playerIndex, int bet){
 		this.chips = chips;
 		this.playerIndex = playerIndex;
 		this.bet = bet;
@@ -21,10 +22,9 @@ public class SimplePlayer implements Player{
 	}
 	
 	public void printHand(){
-		System.out.print("Player " + Integer.toString(playerIndex) + ": ");
+		System.out.print("Player " + Integer.toString(playerIndex) + "'s Cards: ");
 		for(String i : cards)
 			System.out.print(i + ", ");
-		System.out.print("Total: " + Integer.toString(sumCards()));
 	}
 	
 	public void newRound(){
@@ -54,55 +54,34 @@ public class SimplePlayer implements Player{
 	}
 	
 	public String play(int deal){
+		printHand();
 		int sum = sumCards();
-		
-		if (sum > 21)
+		if (sum > 21){
 			choice = "Bust";
-		
-		else if (dd==true)
+			return choice;
+		}
+		else if (dd){
 			choice = "Stay";
+			return choice;
+		}
+		System.out.println("Dealer has a " + Integer.toString(deal) + " showing.");
+		System.out.println("Hit, Stay, or Double Down:");
+		Scanner sc = new Scanner(System.in);
+		String st = sc.nextLine();
+		//sc.close();
+		String c = st.toLowerCase().substring(0,1);
 		
-		else if(sum >= 17)
+		
+		if(c.equals("h"))
+			choice = "Hit";
+		else if(c.equals("s"))
 			choice = "Stay";
-		
-		else if(sum <= 16 && sum >= 13){
-			if(deal < 7)
-				choice = "Stay";
-			else
-				choice = "Hit";
-		}
-		
-		else if(sum == 12){
-			if(deal >= 4 && deal <= 6)
-				choice = "Stay";
-			else
-				choice = "Hit";
-		}
-		else if(sum == 11){
-			if(deal == 11)
-				choice = "Hit";
-			else{
-				dd = true;
-				choice = "Hit";
-			}
-		}
-		
-		else if(sum == 10){
-			if(deal == 10 || deal == 11)
-				choice = "Hit";
-			else{
-				dd = true;
-				choice = "Hit";
-			}
-		}
-		
-		else if(sum == 9 && (deal >= 3 && deal <= 6)){
+		else if(c.equals("d")){
+			choice = "Hit";
 			dd = true;
-			choice = "Hit";
 		}
-		else
-			choice = "Hit";
 		return choice;
+		
 	}
 
 	public void winHand() {
@@ -142,6 +121,14 @@ public class SimplePlayer implements Player{
 	}
 
 	public void bet() {
+		System.out.println("What do you want to bet? Leave blank to keep current bet");
+		Scanner sc = new Scanner(System.in);
+		String st = sc.nextLine();
+		if (st.length() == 0)
+			return;
+		int b = Integer.parseInt(st);
+		bet = b;
+
 	}
 
 	public void newShuffle() {
@@ -155,11 +142,11 @@ public class SimplePlayer implements Player{
 			net = chips() - net;
 		else
 			net = net + chips();
-		System.out.println("Simple Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
+		System.out.println("Human Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 	
 	public void printBet() {
-		System.out.println("Simple Player " + playerIndex() + " Bet = " + Integer.toString(bet));
+		System.out.println("Human Player " + playerIndex() + " Bet = " + Integer.toString(bet));
 	}
 
 	@Override
@@ -167,6 +154,5 @@ public class SimplePlayer implements Player{
 		// TODO Auto-generated method stub
 		
 	}
-	
 	
 }
