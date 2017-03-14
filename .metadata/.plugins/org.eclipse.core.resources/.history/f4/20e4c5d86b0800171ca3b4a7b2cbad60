@@ -1,0 +1,151 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class HumanPlayer implements Player{
+	public ArrayList<String> cards = new ArrayList<>();
+	public ArrayList<String> split = new ArrayList<>();
+	public int playerIndex;
+	public int chips;
+	public int bet;
+	public String choice;
+	public boolean dd = false;
+	
+	
+	public HumanPlayer(int chips, int playerIndex, int bet){
+		this.chips = chips;
+		this.playerIndex = playerIndex;
+		this.bet = bet;
+	}
+	
+	public String choice(){
+		return choice;
+	}
+	
+	public void printHand(){
+		System.out.print("Player " + Integer.toString(playerIndex) + "'s Cards: ");
+		for(String i : cards)
+			System.out.print(i + ", ");
+	}
+	
+	public void newRound(){
+		cards.clear();
+		dd = false;
+	}
+	
+	public void addCard(String card){
+		cards.add(card);
+	}
+
+	public int sumCards(){
+		int sum = 0;
+		int aceCount = 0;
+		for(String c : cards){
+			String i = c.substring(0,c.length()-1);
+			if (i.equals("A"))
+				aceCount++;
+			Integer x = translate(i);
+			sum += x;
+		}
+		while(sum > 21 && aceCount > 0){
+			sum -= 10;
+			aceCount--;
+		}
+		return sum;
+	}
+	
+	public String play(int deal){
+		System.out.println("Hit, Stay, or Double Down");
+		Scanner sc = new Scanner(System.in);
+		String ans = sc.nextLine();
+		sc.close();
+		int sum = sumCards();
+		String c = ans.toLowerCase().substring(0,1);
+		
+		
+		if (sum > 21)
+			return "Bust";
+		if(c.equals("h"))
+			choice = "Hit";
+		if(c.equals("s"))
+			choice = "Stay";
+		if(c.equals("d")){
+			choice = "Double Down";
+			dd = true;
+		}
+		return choice;
+		
+	}
+
+	public void winHand() {
+		if (dd)
+			chips += 2*bet;
+		else {
+			String c1 = cards.get(0);
+			String c2 = cards.get(1);
+			String one = c1.substring(0, c1.length()-1);
+			String two = c2.substring(0, c2.length()-1);
+			if (one.equals("A") && (two.equals("J")||two.equals("Q")||two.equals("K")))
+				chips += bet + (bet/2);
+			else if  (two.equals("A") && (one.equals("J")||one.equals("Q")||one.equals("K")))
+				chips += bet + (bet/2);
+			else
+				chips += bet;
+		}
+	}
+
+	public void loseHand() {
+		if (dd)
+			chips -= 2*bet;
+		else
+			chips -= bet;
+	}
+	
+	public String playerIndex(){
+		return Integer.toString(playerIndex);
+	}
+	
+	public int chips(){
+		return chips;
+	}
+	
+	public int dealerUp(){
+		return 0;
+	}
+
+	public void bet() {
+		System.out.println("What do you want to bet? Leave blank to keep current bet");
+		Scanner sc = new Scanner(System.in);
+		String st = sc.nextLine();
+		sc.close();
+		if (st.length() == 0)
+			return;
+		int b = Integer.parseInt(st);
+		bet = b;
+
+	}
+
+	public void newShuffle() {
+	}
+
+	public void printPlayer(int chips) {
+		int net = chips;
+		if (chips() > net)
+			net = chips() - chips;
+		else if (chips() < net && chips() > 0)
+			net = chips() - net;
+		else
+			net = net + chips();
+		System.out.println("Human Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
+	}
+	
+	public void printBet() {
+		System.out.println("Human Player " + playerIndex() + " Bet = " + Integer.toString(bet));
+	}
+
+	@Override
+	public void updateRunningCount(ArrayList<String> countList) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
