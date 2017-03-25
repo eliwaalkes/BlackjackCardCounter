@@ -9,7 +9,8 @@ public class HumanPlayer implements Player{
 	public int bet;
 	public String choice;
 	public boolean dd = false;
-	
+	public String playerType = "Human Player";
+
 	
 	public HumanPlayer(int chips, int playerIndex, int bet){
 		this.chips = chips;
@@ -133,8 +134,8 @@ public class HumanPlayer implements Player{
 
 	public void newShuffle() {
 	}
-
-	public void printPlayer(int chips) {
+	
+	public int netChips(int chips) {
 		int net = chips;
 		if (chips() > net)
 			net = chips() - chips;
@@ -142,6 +143,11 @@ public class HumanPlayer implements Player{
 			net = chips() - net;
 		else
 			net = net + chips();
+		return net;
+	}
+
+	public void printPlayer(int chips) {
+		int net = netChips(chips);
 		System.out.println("Human Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 	
@@ -153,6 +159,15 @@ public class HumanPlayer implements Player{
 	public void updateRunningCount(ArrayList<String> countList) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String listTotals(int chips) {
+		String ans = "";
+		ans += "Human Player, ";
+		ans += Integer.toString(chips()) + ", ";
+		ans += (Integer.toString(netChips(chips)));
+		return ans;
 	}
 	
 }

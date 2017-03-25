@@ -8,7 +8,9 @@ public class SimplePlayer implements Player{
 	public int bet;
 	public String choice;
 	public boolean dd = false;
-	
+	public boolean sp = false;
+	public String playerType = "Simple Player";
+
 	
 	public SimplePlayer(int chips, int playerIndex, int bet){
 		this.chips = chips;
@@ -148,13 +150,7 @@ public class SimplePlayer implements Player{
 	}
 
 	public void printPlayer(int chips) {
-		int net = chips;
-		if (chips() > net)
-			net = chips() - chips;
-		else if (chips() < net && chips() > 0)
-			net = chips() - net;
-		else
-			net = net + chips();
+		int net = netChips(chips);
 		System.out.println("Simple Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 	
@@ -166,6 +162,27 @@ public class SimplePlayer implements Player{
 	public void updateRunningCount(ArrayList<String> countList) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String listTotals(int chips) {
+		String ans = "";
+		ans += "Simple Player" + ", ";
+		ans += Integer.toString(chips()) + ", ";
+		ans += (Integer.toString(netChips(chips)));
+		return ans;
+	}
+
+	@Override
+	public int netChips(int chips) {
+		int net = chips;
+		if (chips() > net)
+			net = chips() - chips;
+		else if (chips() < net && chips() > 0)
+			net = chips() - net;
+		else
+			net = net + chips();
+		return net;
 	}
 	
 	

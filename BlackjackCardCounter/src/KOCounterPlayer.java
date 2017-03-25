@@ -10,6 +10,7 @@ public class KOCounterPlayer implements Player {
 	public String choice;
 	public boolean dd = false;
 	public int runningCount = 0;
+	public String playerType = "KO Counter";
 	
 	
 	public KOCounterPlayer(int chips, int playerIndex, int minBet){
@@ -168,7 +169,7 @@ public class KOCounterPlayer implements Player {
 		bet = minBet;
 	}
 	
-	public void printPlayer(int chips) {
+	public int netChips(int chips) {
 		int net = chips;
 		if (chips() > net)
 			net = chips() - chips;
@@ -176,6 +177,11 @@ public class KOCounterPlayer implements Player {
 			net = chips() - net;
 		else
 			net = net + chips();
+		return net;
+	}
+	
+	public void printPlayer(int chips) {
+		int net = netChips(chips);
 		System.out.println("KO Counter Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 
@@ -197,6 +203,15 @@ public class KOCounterPlayer implements Player {
 			if(x >= 10)
 				runningCount--;
 		}
+	}
+
+	@Override
+	public String listTotals(int chips) {
+		String ans = "";
+		ans += "KO Counter" + ", ";
+		ans += Integer.toString(chips()) + ", ";
+		ans += (Integer.toString(netChips(chips)));
+		return ans;
 	}
 	
 	

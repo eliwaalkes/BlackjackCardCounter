@@ -96,5 +96,16 @@ public class Dealer implements Player{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String listTotals(int chips) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int netChips(int chips) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

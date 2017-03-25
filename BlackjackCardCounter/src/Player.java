@@ -17,6 +17,8 @@ public interface Player {
 	public void printPlayer(int chips);
 	public void printBet();
 	public void updateRunningCount(ArrayList<String> countList);
+	public String listTotals(int chips);
+	public int netChips(int chips);
 	
 	default public int translate(String card){
 		char c = card.charAt(0);

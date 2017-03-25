@@ -11,6 +11,8 @@ public class WongHalvesCounter implements Player{
 	public boolean dd = false;
 	public int runningCount = 0;
 	int size = 0;
+	public String playerType = "Wong Halves Counter";
+
 	
 	
 	public WongHalvesCounter(int chips, int playerIndex, int minBet){
@@ -168,7 +170,7 @@ public class WongHalvesCounter implements Player{
 		bet = minBet;
 	}
 	
-	public void printPlayer(int chips) {
+	public int netChips(int chips) {
 		int net = chips;
 		if (chips() > net)
 			net = chips() - chips;
@@ -176,6 +178,11 @@ public class WongHalvesCounter implements Player{
 			net = chips() - net;
 		else
 			net = net + chips();
+		return net;
+	}
+	
+	public void printPlayer(int chips) {
+		int net = netChips(chips);
 		System.out.println("Wong Halves Counter Player " + playerIndex() + "\n\tTotal Chips: " + Integer.toString(chips()) + "\n\tNet: " + Integer.toString(net));
 	}
 
@@ -204,6 +211,15 @@ public class WongHalvesCounter implements Player{
 			if(x >= 10)
 				runningCount-=2;
 		}
+	}
+
+	@Override
+	public String listTotals(int chips) {
+		String ans = "";
+		ans += "Wong Halves Counter, ";
+		ans += Integer.toString(chips()) + ", ";
+		ans += (Integer.toString(netChips(chips)));
+		return ans;
 	}
 	
 	

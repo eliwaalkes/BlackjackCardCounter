@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 	public int numPlayers;
@@ -7,9 +8,14 @@ public class Game {
 	public Deck deck;
 	public int dealerUp;
 	public ArrayList<String> countList = new ArrayList<>();
-	int chips;
+	int chips, simplePlayers, KOCounters, WongHalvesCounter, HumanPlayers, minBet;
 	
 	public Game(int simplePlayers, int KOCounters, int WongHalvesCounter, int HumanPlayers, int chips, int minBet){
+		this.simplePlayers = simplePlayers;
+		this.KOCounters = KOCounters;
+		this.WongHalvesCounter = WongHalvesCounter;
+		this.HumanPlayers = HumanPlayers;
+		this.minBet = minBet;
 		this.numPlayers = simplePlayers + KOCounters + WongHalvesCounter + HumanPlayers;
 		this.players = new Player[numPlayers];
 		for (int i = 0; i < simplePlayers; i++){
@@ -81,6 +87,14 @@ public class Game {
 			p.printPlayer(chips);
 		}
 		System.out.print("\n");
+	}
+	
+	public List<String> listTotals(){
+		List<String> ans = new ArrayList<String>();
+		for(Player p : players){
+			ans.add(p.listTotals(chips));
+		}
+		return ans;
 	}
 	
 	public void calculateRound(Player p, Player d){
